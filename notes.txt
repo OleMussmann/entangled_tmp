@@ -1,0 +1,7 @@
+- quarto for compiled languages?
+- asciidoc
+
+- tutorial for existing users
+- auto-overwrite files if time is newer?
+- when are OS writes done? os.sync?
+  - use timeout instead sleeps
