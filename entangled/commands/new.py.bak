@@ -1,0 +1,27 @@
+from typing import Optional
+#from itertools import chain
+#from pathlib import Path
+
+import argh  # type: ignore
+import logging
+
+#from ..document import ReferenceMap
+#from ..config import config, AnnotationMethod
+from ..config import templates
+#from ..markdown_reader import MarkdownReader
+#from ..transaction import transaction, TransactionMode
+#from ..tangle import tangle_ref
+#from ..hooks import get_hooks
+#from ..errors.user import UserError
+
+
+@argh.arg(
+    "-l",
+    "--list-templates",
+    #choices=[name for template.name in templates],
+    help="list official templates",
+)
+def new_template(*, list_template: bool = False):
+    """Create new entangled project from a template"""
+
+    print("new")

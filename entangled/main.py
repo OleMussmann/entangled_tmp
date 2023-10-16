@@ -12,7 +12,7 @@ except ImportError:
     WITH_RICH = False
 
 
-from .commands import tangle, stitch, sync, watch, status
+from .commands import new, tangle, stitch, sync, watch, status
 from .errors.internal import bug_contact
 from .errors.user import UserError
 from .version import __version__
@@ -49,33 +49,56 @@ def configure(debug=False):
 def cli():
     import argparse
 
-    try:
-        parser = argparse.ArgumentParser()
-        parser.add_argument(
-            "-d", "--debug", action="store_true", help="enable debug messages"
-        )
-        parser.add_argument(
-            "-v", "--version", action="store_true", help="show version number"
-        )
-        argh.add_commands(parser, [tangle, stitch, sync, watch, status])
-        args = parser.parse_args()
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "-d", "--debug", action="store_true", help="enable debug messages"
+    )
+    parser.add_argument(
+        "-v", "--version", action="store_true", help="show version number"
+    )
+    #argh.add_commands(parser, [tangle, stitch, sync, watch, status])
+    argh.add_commands(parser, [new, tangle, stitch, sync, watch, status])
+    args = parser.parse_args()
 
-        if args.version:
-            print(f"Entangled {__version__}")
-            sys.exit(0)
+    if args.version:
+        print(f"Entangled {__version__}")
+        sys.exit(0)
 
-        configure(args.debug)
-        argh.dispatch(parser)
-    except KeyboardInterrupt:
-        logging.info("Goodbye")
-        sys.exit(0)
-    except UserError as e:
-        logging.info(str(e))
-        sys.exit(0)
-    except Exception as e:
-        logging.error(str(e))
-        bug_contact(e)
-        sys.exit(1)
+    configure(args.debug)
+    argh.dispatch(parser)
+
+    #try:
+    #    parser = argparse.ArgumentParser()
+    #    parser.add_argument(
+    #        "-d", "--debug", action="store_true", help="enable debug messages"
+    #    )
+    #    parser.add_argument(
+    #        "-v", "--version", action="store_true", help="show version number"
+    #    )
+    #    #argh.add_commands(parser, [tangle, stitch, sync, watch, status])
+    #    argh.add_commands(parser, [new, tangle, stitch, sync, watch, status])
+    #    args = parser.parse_args()
+
+    #    if args.version:
+    #        print(f"Entangled {__version__}")
+    #        sys.exit(0)
+
+    #    configure(args.debug)
+    #    argh.dispatch(parser)
+    #except KeyboardInterrupt:
+    #    logging.info("Goodbye")
+    #    sys.exit(0)
+    #except UserError as e:
+    #    logging.info(str(e))
+    #    sys.exit(0)
+    #except Exception as e:
+    #    # something goes wrong with bug_contact
+    #    # this is a separate issue
+    #    print(e)
+    #    exit()
+    #    logging.error(str(e))
+    #    bug_contact(e)
+    #    sys.exit(1)
 
 
 if __name__ == "__main__":
